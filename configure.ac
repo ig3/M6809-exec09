@@ -88,5 +88,8 @@ if test $rl_lib = yes; then
 	AC_SUBST(READLINE_LIBS)
 fi
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([
+ Makefile
+ src/Makefile
+])
 AC_OUTPUT
