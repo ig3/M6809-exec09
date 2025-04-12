@@ -411,3 +411,37 @@ However, the error-checking is not rigorous. In particular:
 
 - an expression is silently truncated at first white-space - an unrecognised operator is silently ignored - set `3+1=9` does a write to location `4`, but you cannot use arithmetic on the `LHS` with variables.
 - an error in an assignment is reported but the assignment   may have happened; e.g., to the wrong location or with the wrong value.
+
+## 20250412 - autoupdate
+When I run `autoconf` output starts with:
+
+```
+configure.ac:4: warning: The macro `AC_CONFIG_HEADER' is obsolete.
+configure.ac:4: You should run autoupdate.
+```
+
+This is followed by several other warnings, each ending with the advice to
+run autoupdate. While the last commit to the repository I cloned was 24 Apr
+2024, some older versions of autoconf.
+
+```
+$ autoupdate
+configure.ac:8: warning: AC_PROG_CC_C99 is obsolete; use AC_PROG_CC
+
+configure.ac:11: warning: The preprocessor macro `STDC_HEADERS' is obsolete.
+  Except in unusual embedded environments, you can safely include all
+  ISO C90 headers unconditionally.
+configure.ac:18: warning: Update your code to rely only on HAVE_SYS_TIME_H,
+then remove this warning and the obsolete code below it.
+All current systems provide time.h; it need not be checked for.
+Not all systems provide sys/time.h, but those that do, all allow
+you to include it and time.h simultaneously.
+configure.ac:27: warning: your code may safely assume C89 semantics that RETSIGTYPE is void.
+Remove this warning and the `AC_CACHE_CHECK' when you adjust the code.
+```
+These warnings were added by autoupdate, which modified configure.ac.
+
+Then modified configure.ac to add AM_INIT_AUTOMAKE, as autoreconf wasn't
+making Makefile.in from Makefile.am. Then added missing required files.
+
+Finally, autoconf makes Makefile.in and a configure that runs.
